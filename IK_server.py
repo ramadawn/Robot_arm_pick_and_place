@@ -29,7 +29,8 @@ def handle_calculate_IK(req):
         # Initialize service response
         joint_trajectory_list = []
         
-        # Define DH param symbols
+       
+              # Define DH param symbols
         a0, a1, a2, a3, a4, a5, a6 = symbols('a0:7') # link lengths
         d1, d2, d3, d4, d5, d6, d7 = symbols('d1:8') # link offsets
         alpha0, alpha1, alpha2, alpha3, alpha4, alpha5, alpha6 = symbols('alpha0:7') # twist angles
@@ -138,11 +139,13 @@ def handle_calculate_IK(req):
         
         
         
-        
         for x in xrange(0, len(req.poses)):
             # IK code starts here
             joint_trajectory_point = JointTrajectoryPoint()
 
+       
+            
+            
             # Extract end-effector position and orientation from request
 	       # px,py,pz = end-effector position
 	       # roll, pitch, yaw = end-effector orientation
@@ -216,11 +219,11 @@ def handle_calculate_IK(req):
             b2 = atan2(m,m2)
             
             theta2 = pi / 2 - b2 - b
-            
+           
             #Calculate theta3
             
             theta3 = pi / 2 - (atan2(sqrt(1-disp**2), disp) - atan2(l3_5_Z, l3_5_X))
-            
+           
             
             #Calculate Circular Joint
             
@@ -245,7 +248,9 @@ def handle_calculate_IK(req):
 
             # Populate response for the IK request
             # In the next line replace theta1,theta2...,theta6 by your joint angle variables
-	    joint_trajectory_point.positions = [theta1, theta2, theta3, theta4, theta5, theta6]
+	    
+        print theta1, theta2, theta3, theta4, theta5, theta6
+        joint_trajectory_point.positions = [theta1, theta2, theta3, theta4, theta5, theta6]
 	    joint_trajectory_list.append(joint_trajectory_point)
 
         rospy.loginfo("length of Joint Trajectory List: %s" % len(joint_trajectory_list))
